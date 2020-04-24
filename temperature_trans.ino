@@ -25,7 +25,7 @@ RF24 radio(CE_PIN, CSN_PIN);
 //set up connection pipes
 byte addresses[][6] = {"test", "2Node"}; 
 
-struct dataStruct {
+struct myData {
   unsigned long _micros;  // to save response times
   int temp;          //temp data to be transmitted
 } myData;                 
@@ -44,7 +44,7 @@ void setup()
   radio.openWritingPipe(addresses[0]);
   radio.openReadingPipe(1, addresses[1]);
 
-
+}
 void loop()   
 {
   radio.stopListening();                                   //stops listening
