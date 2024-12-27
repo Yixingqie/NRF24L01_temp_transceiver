@@ -59,33 +59,38 @@ void setup()
 
   // Start the radio listening for data
   radio.startListening();
+  display.setTextSize(5);
+  display.setTextColor(WHITE);
 
 }
 
 void loop()  
 {
   //sets the text color
-  display.setTextSize(8.5);
-  display.setTextColor(WHITE);
+
   display.setCursor(0,0);
 
   //while the radio is available -- > keep listening
   if ( radio.available())
   {
-    while (radio.available())   
-    {
+    // while (radio.available())   
+    // {
       radio.read( &myData, sizeof(myData) );             // Get the data
-    }
+    // }
 
-    radio.stopListening();                               
-    radio.write( &myData, sizeof(myData) );              // Sends confirmation
-    radio.startListening();                              
+    // radio.stopListening();                               
+    // radio.write( &myData, sizeof(myData) );              // Sends confirmation
+    // radio.startListening();                              
 
     //prints out the temp data to serial monitor
     Serial.print(myData.temp);
-    display.println((int)((((myData.temp *5.0)/1024.0)-0.5)*100)); //conversion to celsius
-    display.display();
-    display.clearDisplay(); //refreshes display
+
+    float temp = (((myData.temp *5.0)/1024.0)-0.5)*100.0;
+    if(temp >= 0 ){
+      display.clearDisplay(); //refreshes display
+      display.println(temp); //conversion to celsius
+      display.display();
+    }
   } 
 
 display.clearDisplay();
